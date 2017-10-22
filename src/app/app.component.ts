@@ -27,11 +27,14 @@ export class AppComponent {
     this.authorizationService.login()
       .then((data) => {
         console.log(data);
-        console.log(data.user);
-        console.log(data.user.displayName)
+        // console.log(data.user);
+        console.log(data.additionalUserInfo.profile);
+        var Uid = data.user.uid
+        var googleLink = data.additionalUserInfo.profile.link
+        var userPicture = data.additionalUserInfo.profile.picture
         var userName = data.user.displayName
         var userMail= data.user.email
-        this.createCW(userName,userMail);
+        this.createCW(Uid,userName,userMail,googleLink,userPicture);
         alert('Loggeado exitosamente');
       })
       .catch((error) => {
@@ -39,11 +42,22 @@ export class AppComponent {
         alert('Hubo un error al loggearte');
       })
   }
-  createCW(userName, userMail){
-    this.afDB.database.ref('cocow/users/').set({
-    username: userName,
-    email: userMail,
-    // profile_picture : imageUrl
+
+
+
+
+
+
+  createCW(Uid,userName,userMail,googleLink,userPicture){
+    this.afDB.database.ref('cocow/coworking/' + Uid).set(
+  {
+    profile : {
+      username: userName,
+      mail: userMail,
+      googleprofile: googleLink,
+      picture: userPicture
+    }
+
   });
   }
 }
