@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
+import {LoginComponent} from './login/login.component';
 
 @Component({
   selector: 'app-root',
@@ -41,6 +42,14 @@ export class AppComponent {
         console.log(error);
         alert('Hubo un error al loggearte');
       })
+  }
+
+  logout (){
+    this.authorizationService.logout()
+    .then((data)=> {
+      console.log(data);
+      alert('Hasta luego');
+    })
   }
 
 
